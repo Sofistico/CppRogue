@@ -1,8 +1,8 @@
 #pragma once
 
 struct Tile {
-    bool canWalk; // can we walk though this tile?
-    Tile() : canWalk( false ) {}
+    bool explored; // has the player already seen this tile ?
+    Tile() : explored( false ) {}
 };
 
 class Map
@@ -12,8 +12,15 @@ class Map
 
         Map( int width, int height );
         ~Map();
+
         bool isWall( int x, int y ) const;
+        bool isInFov( int x, int y )const;
+        bool isExplored( int x, int y ) const;
+        bool canWalk( int x, int y ) const;
+
         void render() const;
+        void computeFov();
+        void addMonster( int x, int y );
 
     protected:
         Tile *tiles;
