@@ -2,12 +2,19 @@
 #include "Actor.h"
 #include "Map.h"
 #include "Engine.h"
+#include "Ai.h"
+#include "Attacker.h"
+#include "Destructible.h"
 
-Engine::Engine() : fovRadius( 10 ), computeFov( true )
+Engine::Engine( int screenWidth, int screenHeight ) : fovRadius( 10 ), gameStatus( STARTUP ),
+    screenWidth( screenWidth ), screenHeight( screenHeight )
 {
-    TCODConsole::initRoot( 80, 50, "libtcod C++ tutorial", false );
+    TCODConsole::initRoot( screenWidth, screenHeight, "libtcod C++ tutorial", false );
 
-    player = new Actor( 40, 25, '@', TCODColor::white );
+    player = new Actor( 40, 25, '@', TCODColor::white, "Player" );
+    player->destructible = new PlayerDestructible( 30, 2, "your cadaver" );
+    player->attacker = new Attacker( 5 );
+    player->ai = new PlayerAi();
     actors.push( player );
     map = new Map( 80, 45 );
 }
@@ -20,48 +27,20 @@ Engine::~Engine()
 
 void Engine::update()
 {
-    TCOD_key_t key;
-
-    TCODSystem::checkForEvent( TCOD_EVENT_KEY_PRESS, &key, NULL );
-
-    switch( key.vk ) {
-        case TCODK_UP:
-            if( ! map -> isWall( player->x, player->y - 1 ) ) {
-                player->y--;
-                computeFov = true;
-            }
-            break;
-        case TCODK_DOWN:
-            if( !map->isWall( player->x, player->y + 1 ) ) {
-                player->y++;
-                computeFov = true;
-            }
-
-            break;
-
-        case TCODK_LEFT:
-            if( !map->isWall( player->x - 1, player->y ) ) {
-                player->x--;
-                computeFov = true;
-            }
-
-            break;
-
-        case TCODK_RIGHT:
-            if( !map->isWall( player->x + 1, player->y ) ) {
-                player->x++;
-                computeFov = true;
-            }
-
-            break;
-
-        default:
-            break;
-    }
-
-    if( computeFov ) {
+    if( gameStatus == STARTUP ) {
         map->computeFov();
-        computeFov = false;
+    }
+    gameStatus = IDLE;
+    TCODSystem::checkForEvent( TCOD_EVENT_KEY_PRESS, &lastKey, NULL );
+    player->update();
+    if( gameStatus == NEW_TURN ) {
+        for( Actor **iterator = actors.begin(); iterator != actors.end();
+             iterator++ ) {
+            Actor *actor = *iterator;
+            if( actor != player ) {
+                actor->update();
+            }
+        }
     }
 }
 
@@ -80,4 +59,8 @@ void Engine::render()
             actor->render();
         }
     }
+
+    // show the player's stats
+    TCODConsole::root->print( 1, screenHeight - 2, "HP : %d/%d", ( int )player->destructible->hp,
+                              ( int )player->destructible->maxHp );
 }

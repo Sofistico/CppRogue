@@ -14,10 +14,23 @@ class Engine
         Map *map;
         int fovRadius;
 
-        Engine();
+        int screenWidth;
+        int screenHeight;
+        TCOD_key_t lastKey;
+
+        Engine( int screenWidth, int screemHeight );
         ~Engine();
         void update();
         void render();
+        void sendToBack( Actor *owner );
+
+        enum GameStatus {
+            STARTUP,
+            IDLE,
+            NEW_TURN,
+            VICTORY,
+            DEFEAT
+        } gameStatus;
 
     private:
         bool computeFov;

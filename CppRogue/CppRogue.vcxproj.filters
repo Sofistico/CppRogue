@@ -27,6 +27,15 @@
     <ClCompile Include="src\Map.cpp">
       <Filter>Arquivos de Source</Filter>
     </ClCompile>
+    <ClCompile Include="src\Destructible.cpp">
+      <Filter>Arquivos de Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Attacker.cpp">
+      <Filter>Arquivos de Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ai.cpp">
+      <Filter>Arquivos de Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Actor.h">
@@ -36,6 +45,15 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="src\Map.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Destructible.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Attacker.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ai.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>

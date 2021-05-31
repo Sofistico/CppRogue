@@ -2,6 +2,9 @@
 #include "Map.h"
 #include "Actor.h"
 #include "Engine.h"
+#include "Destructible.h"
+#include "Attacker.h"
+#include "Ai.h"
 
 static const int ROOM_MAX_SIZE = 12;
 static const int ROOM_MIN_SIZE = 6;
@@ -146,7 +149,7 @@ bool Map::canWalk( int x, int y ) const
     }
     for( Actor **iterator = engine.actors.begin(); iterator != engine.actors.end(); iterator++ ) {
         Actor *actor = *iterator;
-        if( actor->x == x && actor->y == y ) {
+        if( actor->blocks && actor->x == x && actor->y == y ) {
             // there is an actor there, don't walk
             return false;
         }
@@ -158,9 +161,17 @@ void Map::addMonster( int x, int y )
     TCODRandom *rng = TCODRandom::getInstance();
     if( rng->getInt( 0, 100 ) < 80 ) {
         // creates an orc
-        engine.actors.push( new Actor( x, y, 'o', "orc", TCODColor::desaturatedGreen ) );
+        Actor *orc = new Actor( x, y, 'o', TCODColor::desaturatedGreen, "orc" );
+        orc->destructible = new MonsterDestructible( 10, 0, "dead orc" );
+        orc->attacker = new Attacker( 3 );
+        orc->ai = new MonsterAi();
+        engine.actors.push( orc );
     } else {
         // create a troll
-        engine.actors.push( new Actor( x, y, 'T', "troll", TCODColor::darkerGreen ) );
+        Actor *troll = new Actor( x, y, 'T', TCODColor::darkerGreen, "troll" );
+        troll->destructible = new MonsterDestructible( 16, 1, "troll carcass" );
+        troll->attacker = new Attacker( 4 );
+        troll->ai = new MonsterAi();
+        engine.actors.push( troll );
     }
 }

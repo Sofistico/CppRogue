@@ -3,7 +3,7 @@
 #include "Map.h"
 #include "Engine.h"
 
-Engine engine;
+Engine engine( 80, 50 );
 
 int main()
 {
