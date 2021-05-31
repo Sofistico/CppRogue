@@ -61,6 +61,12 @@ void Engine::render()
     }
 
     // show the player's stats
-    TCODConsole::root->print( 1, screenHeight - 2, "HP : %d/%d", ( int )player->destructible->hp,
-                              ( int )player->destructible->maxHp );
+    TCODConsole::root->printf( 1, screenHeight - 2, "HP : %d/%d", ( int )player->destructible->hp,
+                               ( int )player->destructible->maxHp );
+}
+
+void Engine::sendToBack( Actor *actor )
+{
+    actors.remove( actor );
+    actors.insertBefore( actor, 0 );
 }
