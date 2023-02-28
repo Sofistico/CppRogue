@@ -1,5 +1,7 @@
 #pragma once
-#include "libtcod.hpp"
+#include <libtcod.hpp>
+#include <deque>
+#include <SDL2/SDL.h>
 #include "Actor.h"
 #include "Map.h"
 
@@ -8,32 +10,34 @@ class Map;
 
 class Engine
 {
-    public:
-        TCODList<Actor *> actors;
-        Actor *player;
-        Map *map;
-        int fovRadius;
+public:
+	//TCODList<Actor*> actors;
+	std::deque<Actor*> actors;
 
-        int screenWidth;
-        int screenHeight;
-        TCOD_key_t lastKey;
+	Actor* player;
+	Map* map;
+	int fovRadius;
 
-        Engine( int screenWidth, int screemHeight );
-        ~Engine();
-        void update();
-        void render();
-        void sendToBack( Actor *owner );
+	int screenWidth;
+	int screenHeight;
+	SDL_Event lastKey;
 
-        enum GameStatus {
-            STARTUP,
-            IDLE,
-            NEW_TURN,
-            VICTORY,
-            DEFEAT
-        } gameStatus;
+	Engine(int screenWidth, int screemHeight);
+	~Engine();
+	void update();
+	void render();
+	void sendToBack(Actor* owner);
 
-    private:
-        bool computeFov;
+	enum GameStatus {
+		STARTUP,
+		IDLE,
+		NEW_TURN,
+		VICTORY,
+		DEFEAT
+	} gameStatus;
+
+private:
+	bool computeFov;
 };
 
 extern Engine engine;

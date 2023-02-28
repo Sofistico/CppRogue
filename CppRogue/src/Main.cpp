@@ -3,14 +3,14 @@
 #include "Map.h"
 #include "Engine.h"
 
-Engine engine( 80, 50 );
+Engine engine(80, 50);
 
 int main()
 {
-    while( !TCODConsole::isWindowClosed() ) {
-        engine.update();
-        engine.render();
-        TCODConsole::flush();
-    }
-    return 0;
+	while (!TCODConsole::isWindowClosed()) {
+		engine.update();
+		engine.render();
+		TCODConsole::flush();
+	}
+	return 0;
 }
