@@ -1,5 +1,4 @@
 #include "libtcod.hpp"
-#include <SDL2/SDL.h>
 #include "Actor.h"
 #include "Map.h"
 #include "Engine.h"

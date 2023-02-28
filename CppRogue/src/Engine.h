@@ -1,5 +1,4 @@
 #pragma once
-#include <libtcod.hpp>
 #include <deque>
 #include <SDL2/SDL.h>
 #include "Actor.h"

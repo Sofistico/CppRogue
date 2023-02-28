@@ -1,5 +1,4 @@
 #include "Ai.h"
-#include "Actor.h"
 #include "Engine.h"
 
 // how many turns the monster chases the player
