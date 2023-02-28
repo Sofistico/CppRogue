@@ -1,6 +1,6 @@
 #pragma once
 #include <deque>
-#include <SDL2/SDL.h>
+#include "SDL2/include/SDL.h"
 #include "Actor.h"
 #include "Map.h"
 
@@ -19,7 +19,7 @@ public:
 
 	int screenWidth;
 	int screenHeight;
-	SDL_Event lastKey;
+	//SDL_Event lastKey;
 
 	Engine(int screenWidth, int screemHeight);
 	~Engine();

@@ -12,7 +12,7 @@ void PlayerAi::update(Actor* owner)
 	}
 
 	int dx = 0, dy = 0;
-	switch (engine.lastKey.type) {
+	/*switch (engine.lastKey.type) {
 	case SDL_KEYDOWN:
 		switch (engine.lastKey.key.keysym.sym)
 		{
@@ -43,7 +43,7 @@ void PlayerAi::update(Actor* owner)
 		}
 	default:
 		break;
-	}
+	}*/
 
 	if (dx != 0 || dy != 0) {
 		engine.gameStatus = Engine::NEW_TURN;
